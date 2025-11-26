@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyin Testi | Sag we Çep Beyniňiziň Işleýşini Barlaň</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #2196F3;
+            --dark: #121212;
+            --dark-light: #1E1E1E;
+            --text: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --accent: #FF9800;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            max-width: 100%;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary));
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            font-weight: 300;
+            position: relative;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        
+        .test-container {
+            background-color: var(--dark-light);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .test-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        .option-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .option.selected .option-circle {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            display: block;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(45deg, var(--dark-light), #2a2a3a);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            border-radius: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--dark-light);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .result-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .result-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: left;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .score-inner {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--dark-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .score {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .score-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .brain-side {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .brain-side-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .brain-side-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .brain-side-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .restart-btn {
+            margin: 20px auto 0;
+            background: linear-gradient(to right, var(--secondary), #1976D2);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-inner {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .score {
+                font-size: 36px;
+            }
+            
+            .brain-side {
+                flex-direction: column;
+            }
+        }
+        
+        .timer {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Beyin Testi</h1>
+            <div class="subtitle">Beyniňiziň sag we çep tarapynyň işleýiş derejesini barlaň</div>
+            <div class="intro-text">Bu test, beýniňiziň sag we çep tarapynyň işleýiş derejesini anyklamak üçin düzülen 10 soragly testdir. Testiň ahyrynda, siziň netijäňiz we beýniňiziň sag ýa-da çep tarapynyň näçe derejede işleýändigi barada düşündiriş beriler.</div>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-text">
+                <span>Sorag <span id="current-question">1</span>/<span id="total-questions">10</span></span>
+                <span id="progress-percent">10%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        
+        <div id="test-content">
+            <!-- Test soraglary bu ýere ýüklener -->
+        </div>
+        
+        <div class="navigation">
+            <button id="prev-btn" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M10 12l-4-4 4-4"/>
+                </svg>
+                Öňki
+            </button>
+            <button id="next-btn">
+                Indiki
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M6 12l4-4-4-4"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="result-container" id="result-container">
+            <div class="result-title">Test Netijesi</div>
+            
+            <div class="score-container">
+                <div class="score-circle">
+                    <div class="score-inner">
+                        <div class="score" id="score">0/10</div>
+                        <div class="score-label">Jemi</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brain-side">
+                <div class="brain-side-item">
+                    <div class="brain-side-title">Sag Beyin</div>
+                    <div class="brain-side-desc">Döredijilik, intiutsiýa, çuňňur düşünmek, suratly pikirleniş</div>
+                </div>
+                <div class="brain-side-item">
+                    <div class="brain-side-title">Çep Beyin</div>
+                    <div class="brain-side-desc">Logika, analiz, tertip-düzgün, matematiki pikirleniş</div>
+                </div>
+            </div>
+            
+            <div class="result-description" id="result-description"></div>
+            <button class="restart-btn" id="restart-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M12.8 5.15414V2.5a.7.7 0 0 1 1.4 0v5a.7.7 0 0 1-.7.7h-5a.7.7 0 0 1 0-1.4h3.573c-.7005-1.8367-2.4886-3.1-4.493-3.1C4.7591 3.7 2.7 5.7591 2.7 8.3s2.0591 4.6 4.6 4.6c1.794 0 3.344-1.126 3.943-2.7a.7.7 0 1 1 1.313.467c-.755 2.125-2.764 3.533-5.056 3.533-3.265 0-5.9-2.635-5.9-5.9S4.035 2.3 7.3 2.3c2.403 0 4.525 1.433 5.5 3.65414z"/>
+                </svg>
+                Testi Täzeden Başla
+            </button>
+        </div>
+        
+        <div class="footer">
+            Bu test diňe gözleg maksatly düzüldi. Saglyk meseleleri üçin hökman lukmana ýüz tutuň.
+        </div>
+    </div>
+
+    <script>
+        // Test soraglary we sazlary
+        const questions = [
+            {
+                question: "Eliňiziň barmaklaryny biri-biri bilen birleşdiriň. Eger ýokarda sag eliňiziň uly barmagy bolsa, onda aşakda \"2\" san, eger çep bolsa onda \"1\" sany saýlaň.",
+                options: [
+                    { text: "1 - Çep el", value: 1 },
+                    { text: "2 - Sag el", value: 2 }
+                ]
+            },
+            {
+                question: "Görünmeýân mişeni bir gözüňizi ýumup nyşana alyň. Egerde çep gözüňiz açyk galýan bolsa, onda \"1\" sany, eger sag - \"2\" saýlaň.",
+                options: [
+                    { text: "1 - Çep göz", value: 1 },
+                    { text: "2 - Sag göz", value: 2 }
+                ]
+            },
+            {
+                question: "Eliňizi öňüňizde atanak görnüşde birleşdiriň. Haýsy eliňiz ýokarda bolar? Egerde çep eliňiziň bilegi ýokarda bolsa, onda \"1\" sany, egerde sag ýokarda bolsa - \"2\" sany saýlaň.",
+                options: [
+                    { text: "1 - Çep el ýokarda", value: 1 },
+                    { text: "2 - Sag el ýokarda", value: 2 }
+                ]
+            },
+            {
+                question: "Çapak çalyň. Eger ýokarda çep el bolsa, onda \"1\" sany, eger sag bolsa \"2\" sany saýlaň.",
+                options: [
+                    { text: "1 - Çep el ýokarda", value: 1 },
+                    { text: "2 - Sag el ýokarda", value: 2 }
+                ]
+            },
+            {
+                question: "Aýagyňyzy bir biriniň üstüne goýup oturyň. Eger ýokarda çep aýagyňyz bolsa, onda \"1\" sany, eger sag bolsa \"2\" sany saýlaň.",
+                options: [
+                    { text: "1 - Çep aýak ýokarda", value: 1 },
+                    { text: "2 - Sag aýak ýokarda", value: 2 }
+                ]
+            },
+            {
+                question: "Dörtburçlyk we üçburçlugy sag we çep eliňizde çyzyň! Haýsy eliňiz bilen çyzanyňyz gowy boldy?",
+                options: [
+                    { text: "Gowy we çalt çep elde çekilen", value: 0 },
+                    { text: "Gowy we çalt sag elde çekilen", value: 1 },
+                    { text: "2 sinde-de gowy boldy", value: 2 },
+                    { text: "Çep el, sag ele garanda gowy", value: 3 }
+                ]
+            },
+            {
+                question: "Bir gözüňizi gyrpyň. Haýsy gözüňizi gyrpdyňyz?",
+                options: [
+                    { text: "1 - Çep göz", value: 1 },
+                    { text: "2 - Sag göz", value: 2 }
+                ]
+            },
+            {
+                question: "Islendik eliňiz bilen töwerek çyzyp, peýkamjyk bilen tamamlaň. Peýkamjyk nähili seredýär?",
+                options: [
+                    { text: "1 - Peýkamjyk sagat diline garşy seredip dur", value: 1 },
+                    { text: "2 - Peýkamjyk sagat diliniň ugruna seredip dur", value: 2 }
+                ]
+            },
+            {
+                question: "Ýeriňizden turup öz daşyňyzdan aýlanyň. Haýsy tarapa aýlandyňyz?",
+                options: [
+                    { text: "1 - Çep tarap", value: 1 },
+                    { text: "2 - Sag tarap", value: 2 }
+                ]
+            },
+            {
+                question: "Eliňize ir galam alyp özüňizden uzakda saklaň. Indi galamyň ujuna seredip, ilki bilen bir gözüňizi soňra beýleki gözüňizi ýumup serediň. Haýsy tarap gözüňizi ýumanyňyzda görüjiligiňiz peselýär?",
+                options: [
+                    { text: "1 - Çep göz", value: 1 },
+                    { text: "2 - Sag göz", value: 2 }
+                ]
+            }
+        ];
+
+        // DOM elementleri
+        const testContent = document.getElementById('test-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progress = document.getElementById('progress');
+        const progressPercent = document.getElementById('progress-percent');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const resultContainer = document.getElementById('result-container');
+        const scoreElement = document.getElementById('score');
+        const resultDescription = document.getElementById('result-description');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Test ýagdaýlary
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let score = 0;
+        let startTime;
+
+        // Testi başlat
+        function initTest() {
+            totalQuestionsElement.textContent = questions.length;
+            startTime = Date.now();
+            showQuestion();
+            updateProgress();
+            updateNavigation();
+        }
+
+        // Soragy görkez
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            
+            let optionsHtml = '';
+            question.options.forEach((option, index) => {
+                const isSelected = answers[currentQuestion] === option.value;
+                const optionLetter = String.fromCharCode(65 + index); // A, B, C, D
+                optionsHtml += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-index="${index}">
+                        <div class="option-circle">${optionLetter}</div>
+                        ${option.text}
+                    </div>
+                `;
+            });
+            
+            testContent.innerHTML = `
+                <div class="test-container">
+                    <div class="question">
+                        <span class="question-number">${currentQuestion + 1}</span>
+                        ${question.question}
+                    </div>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+            
+            // Saýlamak üçin wakalar
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const optionIndex = parseInt(option.getAttribute('data-index'));
+                    answers[currentQuestion] = question.options[optionIndex].value;
+                    showQuestion();
+                    updateNavigation();
+                });
+            });
+        }
+
+        // Progressi täzele
+        function updateProgress() {
+            const progressPercentValue = ((currentQuestion + 1) / questions.length) * 100;
+            progress.style.width = `${progressPercentValue}%`;
+            progressPercent.textContent = `${Math.round(progressPercentValue)}%`;
+            currentQuestionElement.textContent = currentQuestion + 1;
+        }
+
+        // Navigasiýany täzele
+        function updateNavigation() {
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Netije';
+                nextBtn.innerHTML = `
+                    Netije
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M13.5 8.5a.5.5 0 0 0 0-1h-9a.5.5 0 0 0 0 1h9z"/>
+                        <path d="M10.5 5.5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3z"/>
+                        <path d="M10.5 10.5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3z"/>
+                        <path d="M6.5 5.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                        <path d="M6.5 10.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                        <path d="M4.5 5.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                        <path d="M4.5 10.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                    </svg>
+                `;
+            } else {
+                nextBtn.textContent = 'Indiki';
+                nextBtn.innerHTML = `
+                    Indiki
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M6 12l4-4-4-4"/>
+                    </svg>
+                `;
+            }
+            
+            // Indiki düwmäniň ýagdaýy
+            nextBtn.disabled = answers[currentQuestion] === null;
+        }
+
+        // Netijeleri hasapla we görkez
+        function showResults() {
+            // Jemi bahany hasapla
+            score = answers.reduce((total, answer) => total + (answer || 0), 0);
+            const maxScore = questions.reduce((total, question) => {
+                const maxOptionValue = Math.max(...question.options.map(opt => opt.value));
+                return total + maxOptionValue;
+            }, 0);
+            
+            const percentage = Math.round((score / maxScore) * 100);
+            const timeSpent = Math.round((Date.now() - startTime) / 1000);
+            
+            scoreElement.textContent = `${score}/${maxScore}`;
+            
+            // Netije düşündirişi
+            let description = '';
+            if (percentage >= 80) {
+                description = `
+                    <p><strong>Gowy! Siziň beýniňiziň sag tarapy ýokary derejede işleýär.</strong></p>
+                    <p>Siz ýaradijilik, intuitiw pikirleniş we giňişlikde düşünmek ukybynyza eýesiňiz. Suratly pikirleniş we düşünje düzümleri döretmek siziň güýçli tarapyňyzdyr. Känbir meseleleri çözmekde doly suratda seretmek ukybyňyz gowy ösdürilen.</p>
+                    <p>Ýönekeý tapawutlandyryş testlerinde ýokary netijeler görkezýäňiz we känbir meseleleri çözmekde doly suratda seretmek ukybyňyz gowy ösdürilen.</p>
+                `;
+            } else if (percentage >= 60) {
+                description = `
+                    <p><strong>Orta netije. Siziň beýniňiziň sag we çep tarapy deň derejede işleýär.</strong></p>
+                    <p>Bu, siziň hem analitiki, hem-de döredijilik ukyplaryňyzy deň ulanýandygynyzy görkezýär. Bu, köplenç iň gowy saýlaw bolup durýar, sebäbi siz dürli meseleleri çözmekde esasy usullary ulanmak bilen çäksiz dälsiňiz.</p>
+                    <p>Hem logiki, hem-de ýaradijylykly çözgütleri tapmakda gowy netijeler görkezýäňiz.</p>
+                `;
+            } else if (percentage >= 40) {
+                description = `
+                    <p><strong>Siziň beýniňiziň çep tarapy has gowy işleýär.</strong></p>
+                    <p>Siz analitiki pikirleniş, logiki çyzgylar we tertip-düzgün bilen işlemekde gowy netijeler görkezýäňiz. Känbir meseleleri çözmekde ähtýatlyk bilen hereket edýäňiz we netijeleriňiziň anyk we ylmy bolmagyna üns berýäňiz.</p>
+                    <p>Ýönekeý tapawutlandyryş testlerinde ortança netijeler görkezýäňiz we känbir meseleleri çözmekde ähtýatlyk bilen hereket edýäňiz.</p>
+                `;
+            } else {
+                description = `
+                    <p><strong>Siziň beýniňiziň sag tarapynyň işleýiş derejesi aşak.</strong></p>
+                    <p>Bu, siziň köplenç analitiki pikirleniş we logiki çyzgylar bilen işleýändigiňizi görkezýär. Ýaradijilik we intuitiw pikirleniş ukyplaryňyzy ösdürmek üçin täze çäreleri synanyşyp görüň we känbir meselelere dürli tarapdan serediň.</p>
+                    <p>Günlük işleriňizde täze usullary ulanmak we suratly pikirlenişi ösdürmek üçin çalşyň.</p>
+                `;
+            }
+            
+            description += `<p class="timer">Testi tamamlamak üçin ${timeSpent} sekunt wagt sarp etdiňiz.</p>`;
+            
+            resultDescription.innerHTML = description;
+            resultContainer.style.display = 'block';
+            testContent.style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+        }
+
+        // Wakalar
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                updateProgress();
+                updateNavigation();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+                updateProgress();
+                updateNavigation();
+            } else {
+                showResults();
+            }
+        });
+
+        restartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(null);
+            score = 0;
+            
+            resultContainer.style.display = 'none';
+            testContent.style.display = 'block';
+            document.querySelector('.navigation').style.display = 'flex';
+            document.querySelector('.progress-container').style.display = 'block';
+            
+            showQuestion();
+            updateProgress();
+            updateNavigation();
+        });
+
+        // Testi başlat
+        initTest();
+    </script>
+</body>
+</html>
